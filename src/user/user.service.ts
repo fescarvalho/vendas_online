@@ -3,7 +3,7 @@ import { CreateUserDto } from './dtos/createUser.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { UserEntity } from './interfaces/user.entity';
+import { UserEntity } from './entities/user.entity';
 import { hash } from 'bcrypt';
 
 @Injectable()
@@ -19,6 +19,7 @@ export class UserService {
     const passwordHashed = await hash(createUserDto.password, saltORRounds);
     return this.userRepository.save({
       ...createUserDto,
+      typeUser: 1,
       password: passwordHashed,
     });
   }
